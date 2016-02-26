@@ -72,6 +72,7 @@
     <Compile Include="Assets\scripts\Building.cs" />
     <Compile Include="Assets\scripts\Castle.cs" />
     <Compile Include="Assets\scripts\MsgDispatcher.cs" />
+    <Compile Include="Assets\scripts\bulletScript.cs" />
     <Compile Include="Assets\scripts\enemyScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

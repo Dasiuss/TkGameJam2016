@@ -2,10 +2,11 @@
 using System.Collections;
 using Assets.scripts;
 
-public class enemyScript : MonoBehaviour {
+class enemyScript : MonoBehaviour {
 
     public GameObject CASTLE;
     public MsgDispatcher msg = new MsgDispatcher();
+    public GameObject playerProjectile;
 
     public float range;
     public float dmg;
@@ -26,49 +27,30 @@ public class enemyScript : MonoBehaviour {
 
     void nextMove()//move or attack
     {
-        Vector3 path = pathToCastle();
-        float distance = Mathf.Abs(path.x) + Mathf.Abs(path.z);//pseudo distance
-        
+        Vector3 castle = CASTLE.transform.position;
+        Vector3 me = transform.position;
 
-        if (distance <= range)
+        if (Vector3.Distance(me, castle) < range)
         {
             attack();
-            return;
         }
-
-        float maxDelta = Time.deltaTime * moveSpeed;
+        else
+        {
+            float maxDelta = Time.deltaTime * moveSpeed;
+            transform.position = Vector3.MoveTowards(me, castle, maxDelta);
+        }
         
-        if (Mathf.Abs(path.x) > maxDelta) {
-            path.x = maxDelta * Mathf.Sign(path.x);
-        }
-
-        if (Mathf.Abs(path.z) > maxDelta) {
-            path.z = maxDelta * Mathf.Sign(path.z);
-        }
-        move(path);
     }
-
-    void move(Vector3 step)
-    {
-        step.x += transform.position.x;
-        step.y += transform.position.y;
-        step.z += transform.position.z;
-        transform.position = step;
-    }
-
-    Vector3 pathToCastle()
-    {
-        float xDiff = CASTLE.transform.position.x - transform.position.x;
-        float zDiff = CASTLE.transform.position.z - transform.position.z;
-
-        return new Vector3(xDiff, 0, zDiff);
-    }
-
+    
     void attack()
     {
         if(lastAttackTime < Time.time - attackRate)
         {
-            msg.damageCastle(dmg);
+            GameObject go = Instantiate(playerProjectile, transform.position, Quaternion.LookRotation(CASTLE.transform.position)) as GameObject;
+            Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
+            go.transform.rotation = q * go.transform.rotation;
+            
+            //msg.damageCastle(dmg);
             lastAttackTime += attackRate;
         }
     }

@@ -3,9 +3,14 @@ using System.Collections;
 
 namespace Assets.scripts
 {
-    public class MsgDispatcher
+    class MsgDispatcher
     {
-        Building castle;
+       public Building castle;
+
+        public void setCastle(Building castle)
+        {
+            this.castle = castle;
+        }
 
         public void damageCastle(float dmg)
         {
