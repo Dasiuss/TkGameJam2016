@@ -5,15 +5,20 @@ public class GameController : MonoBehaviour {
 
     private bool wave;
     private int income = 500;
+    private int resources = 1000;
 
     void Start () {
         wave = false;
     }
 
-    void StartWave () {
+    public void StartWave () {
         wave = true;
-        btn.setActive (false);
+        Debug.Log ("IT WORKS");
     }
 
+    void AfterWaveUpdate () {
+        wave = false;
+        resources += income;
+    }
 
 }
