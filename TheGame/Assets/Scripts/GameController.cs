@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour {
     private int goldAmount = 1000;
     private Text goldText;
     private Text incomeText;
+    private GameObject buttonImage;
+
+    private float waveDuration = 10.0f;
 
     void Start () {
         wave = false;
@@ -16,16 +19,24 @@ public class GameController : MonoBehaviour {
         incomeText.text = "Income: " + income;
         goldText = GameObject.FindWithTag ("GoldText").GetComponent<Text> ();
         goldText.text = "Gold: " + goldAmount;
+        buttonImage = GameObject.FindWithTag ("StartWaveButton");//.GetComponent<Image> ();
     }
 
-    public void StartWave () {
+    public IEnumerator StartWave () {
         wave = true;
-        Debug.Log ("IT WORKS!");
+        buttonImage.gameObject.SetActive (false);
+        SpawnEnemies ();
+        yield return new WaitForSeconds (waveDuration);
+        AfterWaveUpdate ();
     }
 
     void AfterWaveUpdate () {
         wave = false;
         goldAmount += income;
+        buttonImage.gameObject.SetActive (true);
     }
 
+    void SpawnEnemies () {
+        Debug.Log ("IT WORKS!");
+    }
 }

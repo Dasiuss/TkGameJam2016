@@ -13,6 +13,6 @@ public class StartWaveButtonController : MonoBehaviour, IPointerClickHandler {
     }           
 
     public void OnPointerClick (PointerEventData data) {
-            gc.GetComponent<GameController> ().StartWave ();
+            StartCoroutine(gc.GetComponent<GameController> ().StartWave ());
     }
 }
