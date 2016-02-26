@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.scripts;
 
 public class enemyScript : MonoBehaviour {
 
     public GameObject CASTLE;
+    public MsgDispatcher msg = new MsgDispatcher();
+
     public float range;
     public float dmg;
     public float attackRate; // seconds between attacks
@@ -26,6 +29,8 @@ public class enemyScript : MonoBehaviour {
         Vector3 path = pathToCastle();
         float distance = path.x + path.z;//pseudo distance
 
+        Debug.Log(distance);
+
         if (distance <= range)
         {
             attack();
@@ -34,14 +39,18 @@ public class enemyScript : MonoBehaviour {
 
         float maxDelta = Time.deltaTime * moveSpeed;
 
-        if (distance > maxDelta)
+        Debug.Log(path);
+        Vector3 shortPath = new Vector3(path.x, 0, path.z);
+        if (path.x > maxDelta)
         {
-            Vector3 shortPath = new Vector3();
             shortPath.x = path.x * maxDelta / (distance - path.z);
+        }
+        if (path.z > maxDelta) {
             shortPath.z = path.z * maxDelta / (distance - path.x);
             path = shortPath;
         }
-        move(path);
+        Debug.Log(path);
+        move(shortPath);
     }
 
     void move(Vector3 step)
@@ -52,7 +61,7 @@ public class enemyScript : MonoBehaviour {
     Vector3 pathToCastle()
     {
         float xDiff = transform.position.x - CASTLE.transform.position.x;
-        float zDiff = transform.position.y - CASTLE.transform.position.y;
+        float zDiff = transform.position.z - CASTLE.transform.position.z;
 
         return new Vector3(xDiff, 0, zDiff);
     }
@@ -61,7 +70,7 @@ public class enemyScript : MonoBehaviour {
     {
         if(lastAttackTime < Time.time - attackRate)
         {
-            //CASTLE.takeDmg(dmg);
+            msg.damageCastle(dmg);
             lastAttackTime += attackRate;
         }
     }
