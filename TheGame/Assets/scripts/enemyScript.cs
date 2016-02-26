@@ -27,9 +27,8 @@ public class enemyScript : MonoBehaviour {
     void nextMove()//move or attack
     {
         Vector3 path = pathToCastle();
-        float distance = path.x + path.z;//pseudo distance
-
-        Debug.Log(distance);
+        float distance = Mathf.Abs(path.x) + Mathf.Abs(path.z);//pseudo distance
+        
 
         if (distance <= range)
         {
@@ -38,30 +37,29 @@ public class enemyScript : MonoBehaviour {
         }
 
         float maxDelta = Time.deltaTime * moveSpeed;
+        
+        if (Mathf.Abs(path.x) > maxDelta) {
+            path.x = maxDelta * Mathf.Sign(path.x);
+        }
 
-        Debug.Log(path);
-        Vector3 shortPath = new Vector3(path.x, 0, path.z);
-        if (path.x > maxDelta)
-        {
-            shortPath.x = path.x * maxDelta / (distance - path.z);
+        if (Mathf.Abs(path.z) > maxDelta) {
+            path.z = maxDelta * Mathf.Sign(path.z);
         }
-        if (path.z > maxDelta) {
-            shortPath.z = path.z * maxDelta / (distance - path.x);
-            path = shortPath;
-        }
-        Debug.Log(path);
-        move(shortPath);
+        move(path);
     }
 
     void move(Vector3 step)
     {
-        transform.position = transform.position + step;
+        step.x += transform.position.x;
+        step.y += transform.position.y;
+        step.z += transform.position.z;
+        transform.position = step;
     }
 
     Vector3 pathToCastle()
     {
-        float xDiff = transform.position.x - CASTLE.transform.position.x;
-        float zDiff = transform.position.z - CASTLE.transform.position.z;
+        float xDiff = CASTLE.transform.position.x - transform.position.x;
+        float zDiff = CASTLE.transform.position.z - transform.position.z;
 
         return new Vector3(xDiff, 0, zDiff);
     }
