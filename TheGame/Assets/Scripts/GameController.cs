@@ -3,13 +3,17 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private bool wave;
+    private int income = 500;
+
+    void Start () {
+        wave = false;
+    }
+
+    void StartWave () {
+        wave = true;
+        btn.setActive (false);
+    }
+
+
 }
