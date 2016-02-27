@@ -9,11 +9,18 @@ public class GameController : MonoBehaviour {
     private Text goldText;
     private Text incomeText;
     private GameObject buttonImage;
-    private float seconds;
+    private bool wave;
 
+    private float spawnEnemiesCallRate = 0.5f;
+    private float spawnEnemiesLastCall = 0.0f;
+
+    private float startTime;
+    private float seconds;
+    private float time;
     private float waveDuration = 10.0f;
 
     void Start () {
+        wave = false;
         incomeText = GameObject.FindWithTag ("IncomeText").GetComponent<Text>();
         incomeText.text = "Income: " + income;
         goldText = GameObject.FindWithTag ("GoldText").GetComponent<Text> ();
@@ -21,28 +28,36 @@ public class GameController : MonoBehaviour {
         buttonImage = GameObject.FindWithTag ("StartWaveButton");
     }
 
+    void Update () {
+        time = Time.time;
+        seconds = time - startTime;
+        if (seconds > waveDuration && wave) {
+            AfterWaveUpdate ();
+        }
+        if (wave && time - spawnEnemiesLastCall > spawnEnemiesCallRate) {
+            spawnEnemiesLastCall = time;
+            SpawnEnemies ();
+        }
+    }
     public void StartWave () {
         buttonImage.gameObject.SetActive (false);
         seconds = 10;
-        SpawnEnemies ();
-        AfterWaveUpdate ();
+        startTime = Time.time;
+        wave = true;
     }
 
     void AfterWaveUpdate () {
+        wave = false;
         goldAmount += income;
+        goldText.text = "Gold: " + goldAmount;
         buttonImage.gameObject.SetActive (true);
         Debug.Log ("Build phase");
     }
 
     void SpawnEnemies () {
-        float time = Time.time;
-        Debug.Log ("IT WORKS!");
-        while (seconds > 0) {
-            seconds -= Time.time-time;
-            if (seconds <= 0) {
-                Debug.Log ("Wave ends!");
-                break;
-            }
+        Debug.Log (seconds); 
+        if (seconds <= 0) {
+            Debug.Log ("Wave ends!");
         }
     }
 }
