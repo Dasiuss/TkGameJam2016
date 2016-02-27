@@ -48,8 +48,8 @@ class enemyScript : MonoBehaviour {
         if(lastAttackTime < Time.time - attackRate)
         {
             GameObject go = Instantiate(playerProjectile, transform.position, Quaternion.LookRotation(CASTLE.transform.position)) as GameObject;
-            go.SendMessage("setDmg", dmg);
-            go.SendMessage("setTarget", CASTLE);
+            go.SendMessage("SetDmg", dmg);
+            go.SendMessage("SetEnemy", CASTLE);
             Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
             go.transform.rotation = q * go.transform.rotation;
             
