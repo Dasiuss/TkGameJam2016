@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class BuySniperTowerController : MonoBehaviour {
+public class BuySniperTowerController : MonoBehaviour, IPointerClickHandler {
 
     public bool onClick = true;
     GameObject gc;

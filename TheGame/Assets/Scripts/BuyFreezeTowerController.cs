@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class BuyFreezeTowerController : MonoBehaviour {
+public class BuyFreezeTowerController : MonoBehaviour, IPointerClickHandler {
 
     public bool onClick = true;
     GameObject gc;

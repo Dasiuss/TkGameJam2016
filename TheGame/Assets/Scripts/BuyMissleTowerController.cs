@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class BuyMissleTowerComponent : MonoBehaviour {
+public class BuyMissleTowerController : MonoBehaviour, IPointerClickHandler {
 
     public bool onClick = true;
     GameObject gc;
@@ -12,6 +12,7 @@ public class BuyMissleTowerComponent : MonoBehaviour {
     }
 
     public void OnPointerClick (PointerEventData data) {
-        gc.GetComponent<GameController> ().BuyMissle();
+        Debug.Log ("CLICK!");
+        gc.GetComponent<GameController> ().BuyMissle ();
     }
 }
