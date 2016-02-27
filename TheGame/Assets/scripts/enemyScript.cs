@@ -12,6 +12,7 @@ class enemyScript : MonoBehaviour {
     public float attackRate; // seconds between attacks
     public float moveSpeed; // units per second
     public string castleName = "Castle";
+    public float hp;
 
     private float lastAttackTime;
 
@@ -28,12 +29,19 @@ class enemyScript : MonoBehaviour {
 
     void nextMove()//move or attack
     {
+
+        GameObject target = findTarget();
+        if(target!= null)
+        {
+            attack(target);
+            return;
+        }
         Vector3 castle = CASTLE.transform.position;
         Vector3 me = transform.position;
 
-        if (Vector3.Distance(me, castle) < range)
+        if (Vector3.Distance(me, castle) <= range)
         {
-            attack();
+            attack(CASTLE);
         }
         else
         {
@@ -43,17 +51,32 @@ class enemyScript : MonoBehaviour {
         
     }
     
-    void attack()
+    private GameObject findTarget()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("tower");
+        foreach (GameObject e in enemies){
+            if (Vector3.Distance(this.transform.position, e.transform.position) <= range) return e;
+        }
+        return null;
+    }
+
+    void attack(GameObject target)
     {
         if(lastAttackTime < Time.time - attackRate)
         {
             GameObject go = Instantiate(playerProjectile, transform.position, Quaternion.LookRotation(CASTLE.transform.position)) as GameObject;
             go.SendMessage("SetDmg", dmg);
-            go.SendMessage("SetEnemy", CASTLE);
-            Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
-            go.transform.rotation = q * go.transform.rotation;
+            go.SendMessage("SetEnemy", target);
+            // TODO Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
+            //      go.transform.rotation = q * go.transform.rotation;
             
             lastAttackTime = Time.time;
         }
+    }
+
+    public void takeDmg(object dmg)
+    {
+        hp -= (float)dmg;
+        if (hp <= 0) Destroy(gameObject);
     }
 }
