@@ -11,6 +11,7 @@ class TowerScript : Building {
     public float damage;
     public float explosionRadius;
     public GameObject bulletPrefab;
+    public int cost;
 
     private bool wave;
     private float lastShot = 0;
@@ -28,13 +29,13 @@ class TowerScript : Building {
 	// Update is called once per frame
 	void Update () {
         if (movable) {
-            //actualDistance = (transform.position - Camera.main.transform.position).magnitude;
-            //actualDistance = 10;
-            //Vector3 mouseposition = Input.mousePosition;
-            //mouseposition.z = actualDistance;
-            //transform.position = Camera.main.ScreenToWorldPoint (mouseposition);
             transform.position = new Vector3 (Input.mousePosition.x/5-Screen.width/10, 0, Input.mousePosition.y/5-Screen.height/10);
             UnityEngine.Cursor.visible = false;
+            if (Input.GetButton ("Fire1")) {
+                UnityEngine.Cursor.visible = true;
+                movable = false;
+                transform.localScale = new Vector3 (1, 1, 1);
+            }
         }
         GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
         GameObject nearestEnemy = null;
@@ -75,13 +76,5 @@ class TowerScript : Building {
 
     public void SetMovable(object m) {
         movable = (bool)m;
-    }
-
-    void OnMouseDown () {
-        Debug.Log ("Click");
-        if (movable) {
-            movable = false;
-            UnityEngine.Cursor.visible = true;
-        }
     }
 }

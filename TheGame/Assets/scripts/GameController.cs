@@ -106,18 +106,30 @@ public class GameController : MonoBehaviour {
         
     }
 
-    public void BuyMissle() {
-        GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10,-78.91f,10), Quaternion.identity);
-        mtower.transform.localScale = new Vector3 (10, 10, 10);
-        mtower.SendMessage ("SetMovable", true);
-        Debug.Log ("So you want to buy missle tower, huh?");
+    public void BuyMissle () {
+        if (missleTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= missleTowerPrefab.GetComponent<TowerScript> ().cost;
+        }
     }
 
     public void BuyFreeze () {
-        Debug.Log ("So you want to buy freeze tower, huh?");
+        if (freezeTowerPrefab.GetComponent<FreezeTowerController> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (freezeTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= freezeTowerPrefab.GetComponent<FreezeTowerController> ().cost;
+        }
     }
 
     public void BuySniper () {
-        Debug.Log ("So you want to buy sniper tower, huh?");
+        if (sniperTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (sniperTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= sniperTowerPrefab.GetComponent<TowerScript> ().cost;
+        }
     }
 }
