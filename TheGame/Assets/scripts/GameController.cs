@@ -70,4 +70,9 @@ public class GameController : MonoBehaviour {
         monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
         
     }
+
+    void AddGoldForAKill(object gold)
+    {
+        this.goldAmount += (int) gold;
+    }
 }

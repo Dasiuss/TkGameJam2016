@@ -4,8 +4,11 @@ using Assets.scripts;
 
 class enemyScript : MonoBehaviour {
 
-    public GameObject CASTLE;
+    private GameObject CASTLE;
     public GameObject playerProjectile;
+    public GameObject[] drops;
+    private GameObject gameCtrl;
+    public float dropProbability = 0.1f;
 
     public float range;
     public float dmg;
@@ -13,6 +16,7 @@ class enemyScript : MonoBehaviour {
     public float moveSpeed; // units per second
     public string castleName = "Castle";
     public float hp;
+    public int goldWorth;
 
     private float lastAttackTime;
 
@@ -20,6 +24,7 @@ class enemyScript : MonoBehaviour {
 	void Start () {
         lastAttackTime = Time.time;
         CASTLE = GameObject.Find(castleName);
+        gameCtrl = GameObject.FindGameObjectWithTag("GameController");
 	}
 	
 	// Update is called once per frame
@@ -77,6 +82,20 @@ class enemyScript : MonoBehaviour {
     public void takeDmg(object dmg)
     {
         hp -= (float)dmg;
-        if (hp <= 0) Destroy(gameObject);
+        if (hp <= 0) die();
+    }
+
+    private void die()
+    {
+        foreach (GameObject drop in drops)
+        {
+            float rnd = Random.value;
+            if (rnd > dropProbability) { 
+                Instantiate(drop, transform.position, transform.rotation);
+            }
+        }
+        gameCtrl.SendMessage("AddGoldForAKill", goldWorth);
+        
+        Destroy(gameObject);
     }
 }
