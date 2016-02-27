@@ -46,7 +46,7 @@ public class TowerScript : MonoBehaviour {
 
     void ShootAt (GameObject enemy) {
         GameObject bulletGO = (GameObject)Instantiate (bulletPrefab, this.transform.position, this.transform.rotation);
-        BulletScript bulletScr = bulletGO.GetComponent<BulletScript> ();
+        bulletScript bulletScr = bulletGO.GetComponent<bulletScript> ();
         bulletScr.SendMessage ("SetDmg", damage);
         bulletScr.SendMessage ("SetEnemy",enemy);
     }
