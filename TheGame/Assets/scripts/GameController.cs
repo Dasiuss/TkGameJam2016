@@ -102,6 +102,11 @@ public class GameController : MonoBehaviour {
         };
     }
 
+    void TextUpdate()
+    {
+        goldText.text = "Gold: " + goldAmount;
+    }
+
     void SpawnEnemies () {
         monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
         
@@ -117,15 +122,33 @@ public class GameController : MonoBehaviour {
         this.goldAmount += (int)gold;
     }
 
-    public void BuyMissle() {
-        Debug.Log ("So you want to buy missle tower, huh?");
+    public void BuyMissle () {
+        if (missleTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= missleTowerPrefab.GetComponent<TowerScript> ().cost;
+            TextUpdate();
+        }
     }
 
     public void BuyFreeze () {
-        Debug.Log ("So you want to buy freeze tower, huh?");
+        if (freezeTowerPrefab.GetComponent<FreezTowerController> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (freezeTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= freezeTowerPrefab.GetComponent<FreezTowerController> ().cost;
+            TextUpdate();
+        }
     }
 
     public void BuySniper () {
-        Debug.Log ("So you want to buy sniper tower, huh?");
+        if (sniperTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
+            GameObject mtower = (GameObject)Instantiate (sniperTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
+            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            mtower.SendMessage ("SetMovable", true);
+            goldAmount -= sniperTowerPrefab.GetComponent<TowerScript> ().cost;
+            TextUpdate();
+        }
     }
 }
