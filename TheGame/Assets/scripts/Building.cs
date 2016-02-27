@@ -12,11 +12,8 @@ namespace Assets.scripts
     {
         public float hp;
 
-        public void takeDmg(float dmg)
-        {
-            hp -= dmg;
-            if (hp <= 0) destroy();
-        }
-        public abstract void destroy();
+        public abstract void takeDmg(object dmg);
+
+
     }
 }

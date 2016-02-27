@@ -10,11 +10,12 @@ namespace Assets.scripts
 {
     class Castle : Building
     {
-        GameObject go;
-
-        public override void destroy()
+        public override void takeDmg(object dmg)
         {
-            go.SetActive(false);
+            Debug.Log("dmg!"+(float)dmg);
+            this.hp -= (float) dmg;
+            if (hp < 1) Destroy(gameObject);
+            Debug.Log("hp: " + hp);
         }
     }
 }
