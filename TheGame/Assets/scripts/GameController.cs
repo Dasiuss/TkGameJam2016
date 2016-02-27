@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     private GameObject buttonImage;
     private GameObject spellPanel;
     private GameObject monsterSpawner;
+    private GameObject buyTowerPnl;
     private bool wave;
 
     private float spawnEnemiesCallRate = 0.5f;
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour {
         buttonImage = GameObject.FindWithTag ("StartWaveButton");
         spellPanel = GameObject.Find ("SpellPanel");
         spellPanel.gameObject.SetActive (false);
+        buyTowerPnl = GameObject.Find ("TowerPanel");
         monsterSpawner = GameObject.Find ("MonsterSpawner");
         SetBuyTowerPanel ();
     }
@@ -81,6 +83,7 @@ public class GameController : MonoBehaviour {
         startTime = Time.time;
         wave = true;
         spellPanel.SetActive (true);
+        buyTowerPnl.SetActive (false);
     }
 
     void AfterWaveUpdate () {
@@ -89,6 +92,7 @@ public class GameController : MonoBehaviour {
         goldText.text = "Gold: " + goldAmount;
         buttonImage.gameObject.SetActive (true);
         spellPanel.gameObject.SetActive (false);
+        buyTowerPnl.SetActive (true);
         Debug.Log ("Build phase");
         GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
         foreach (GameObject e in enemies) {
@@ -102,4 +106,15 @@ public class GameController : MonoBehaviour {
         
     }
 
+    public void BuyMissle() {
+        Debug.Log ("So you want to buy missle tower, huh?");
+    }
+
+    public void BuyFreeze () {
+        Debug.Log ("So you want to buy freeze tower, huh?");
+    }
+
+    public void BuySniper () {
+        Debug.Log ("So you want to buy sniper tower, huh?");
+    }
 }
