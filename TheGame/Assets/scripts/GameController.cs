@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     private GameObject buttonImage;
     private GameObject spellPanel;
     private GameObject monsterSpawner;
+    private GameObject buyTowerPnl;
     private bool wave;
     private List<string> availableSpells = new List<string>();
 
@@ -23,6 +24,10 @@ public class GameController : MonoBehaviour {
     private float time;
     private float waveDuration = 10.0f;
 
+    public GameObject missleTowerPrefab;
+    public GameObject freezeTowerPrefab;
+    public GameObject sniperTowerPrefab;
+
     void Start () {
         wave = false;
         incomeText = GameObject.FindWithTag ("IncomeText").GetComponent<Text>();
@@ -32,7 +37,9 @@ public class GameController : MonoBehaviour {
         buttonImage = GameObject.FindWithTag ("StartWaveButton");
         spellPanel = GameObject.Find ("SpellPanel");
         spellPanel.gameObject.SetActive (false);
+        buyTowerPnl = GameObject.Find ("TowerPanel");
         monsterSpawner = GameObject.Find ("MonsterSpawner");
+        SetBuyTowerPanel ();
     }
 
     void Update () {
@@ -46,12 +53,39 @@ public class GameController : MonoBehaviour {
             SpawnEnemies ();
         }
     }
+
+    void SetBuyTowerPanel () {
+        Text mthp = GameObject.Find ("MtHP").GetComponent<Text> ();
+        Text mtdmg = GameObject.Find ("MtDmg").GetComponent<Text> ();
+        Text mtfr = GameObject.Find ("MtFr").GetComponent<Text> ();
+        mthp.text = "HP: " + missleTowerPrefab.GetComponent<TowerScript> ().hp;
+        mtdmg.text = "Dmg: " + missleTowerPrefab.GetComponent<TowerScript> ().damage;
+        mtfr.text = "FR: " + missleTowerPrefab.GetComponent<TowerScript> ().fireRate;
+
+
+        Text fthp = GameObject.Find ("FtHP").GetComponent<Text> ();
+        Text ftdmg = GameObject.Find ("FtDmg").GetComponent<Text> ();
+        Text ftfr = GameObject.Find ("FtFr").GetComponent<Text> ();
+        fthp.text = "HP: " + freezeTowerPrefab.GetComponent<TowerScript> ().hp;
+        ftdmg.text = "Dmg: " + freezeTowerPrefab.GetComponent<TowerScript> ().damage;
+        ftfr.text = "FR: " + freezeTowerPrefab.GetComponent<TowerScript> ().fireRate;
+
+
+        Text sthp = GameObject.Find ("StHP").GetComponent<Text> ();
+        Text stdmg = GameObject.Find ("StDmg").GetComponent<Text> ();
+        Text stfr = GameObject.Find ("StFr").GetComponent<Text> ();
+        sthp.text = "HP: " + sniperTowerPrefab.GetComponent<TowerScript> ().hp;
+        stdmg.text = "Dmg: " + sniperTowerPrefab.GetComponent<TowerScript> ().damage;
+        stfr.text = "Fr: " + sniperTowerPrefab.GetComponent<TowerScript> ().fireRate;
+    }
+
     public void StartWave () {
         buttonImage.gameObject.SetActive (false);
         seconds = 10;
         startTime = Time.time;
         wave = true;
         spellPanel.SetActive (true);
+        buyTowerPnl.SetActive (false);
     }
 
     void AfterWaveUpdate () {
@@ -60,6 +94,7 @@ public class GameController : MonoBehaviour {
         goldText.text = "Gold: " + goldAmount;
         buttonImage.gameObject.SetActive (true);
         spellPanel.gameObject.SetActive (false);
+        buyTowerPnl.SetActive (true);
         Debug.Log ("Build phase");
         GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
         foreach (GameObject e in enemies) {
@@ -72,7 +107,7 @@ public class GameController : MonoBehaviour {
         monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
         
     }
-
+    
     public void addSpell(object spellName)
     {
         availableSpells.Add((string) spellName);
@@ -80,6 +115,18 @@ public class GameController : MonoBehaviour {
 
     void AddGoldForAKill(object gold)
     {
-        this.goldAmount += (int) gold;
+        this.goldAmount += (int)gold;
+    }
+
+    public void BuyMissle() {
+        Debug.Log ("So you want to buy missle tower, huh?");
+    }
+
+    public void BuyFreeze () {
+        Debug.Log ("So you want to buy freeze tower, huh?");
+    }
+
+    public void BuySniper () {
+        Debug.Log ("So you want to buy sniper tower, huh?");
     }
 }

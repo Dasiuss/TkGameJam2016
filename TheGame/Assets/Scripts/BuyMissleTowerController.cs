@@ -2,15 +2,15 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class StartWaveButtonController : MonoBehaviour, IPointerClickHandler {
-           
+public class BuyMissleTowerController : MonoBehaviour, IPointerClickHandler {
+    
     GameObject gc;
 
     void Start () {
         gc = GameObject.FindWithTag ("GameController");
-    }           
+    }
 
     public void OnPointerClick (PointerEventData data) {
-            gc.GetComponent<GameController> ().StartWave ();
+        gc.GetComponent<GameController> ().BuyMissle ();
     }
 }
