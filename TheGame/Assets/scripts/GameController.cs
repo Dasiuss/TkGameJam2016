@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
     private Text incomeText;
     private GameObject buttonImage;
     private GameObject spellPanel;
+    private GameObject monsterSpawner;
     private bool wave;
 
     private float spawnEnemiesCallRate = 0.5f;
@@ -29,6 +30,7 @@ public class GameController : MonoBehaviour {
         buttonImage = GameObject.FindWithTag ("StartWaveButton");
         spellPanel = GameObject.Find ("SpellPanel");
         spellPanel.gameObject.SetActive (false);
+        monsterSpawner = GameObject.Find ("MonsterSpawner");
     }
 
     void Update () {
@@ -57,12 +59,15 @@ public class GameController : MonoBehaviour {
         buttonImage.gameObject.SetActive (true);
         spellPanel.gameObject.SetActive (false);
         Debug.Log ("Build phase");
+        GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
+        foreach (GameObject e in enemies) {
+            Destroy (e);
+        };
     }
 
     void SpawnEnemies () {
-        Debug.Log (seconds); 
-        if (seconds <= 0) {
-            Debug.Log ("Wave ends!");
-        }
+        Debug.Log (seconds);
+        monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
+        
     }
 }
