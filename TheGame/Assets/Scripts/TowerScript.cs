@@ -47,11 +47,11 @@ class TowerScript : Building {
 	}
 
 
-    void ShootAt (GameObject enemy) {
-        GameObject bulletGO = (GameObject)Instantiate (bulletPrefab, this.transform.position, this.transform.rotation);
-        bulletScript bulletScr = bulletGO.GetComponent<bulletScript> ();
-        bulletScr.SendMessage ("SetDmg", damage);
-        bulletScr.SendMessage ("SetEnemy",enemy);
+    void ShootAt (GameObject target) {
+
+        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(target.transform.position)) as GameObject;
+        go.SendMessage("SetDmg", damage);
+        go.SendMessage("SetEnemy", target);
     }
     
 

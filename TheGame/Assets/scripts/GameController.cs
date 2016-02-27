@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour {
         buttonImage.gameObject.SetActive (true);
         spellPanel.gameObject.SetActive (false);
         Debug.Log ("Build phase");
-        GameObject [] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+        GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
         foreach (GameObject e in enemies) {
             Destroy (e);
         };

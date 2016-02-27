@@ -14,11 +14,11 @@ public class MonsterSpawnerScript : MonoBehaviour {
 	}
 
     public void SpawnMob () {
-        for (int i = 0; i < 2; i++) {
-            Vector3 pos = RandomCircle (center, 5.0f);
+        for (int i = 0; i < 5; i++) {
+            Vector3 pos = RandomCircle (center, 30.0f);
             Quaternion rot = Quaternion.FromToRotation (Vector3.forward, center - pos);
             GameObject e = (GameObject)Instantiate (mobPrefab, pos, rot);
-            e.tag = "Enemy";
+            e.tag = "enemy";
         }
     }
 
