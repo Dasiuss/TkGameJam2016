@@ -103,7 +103,6 @@ public class GameController : MonoBehaviour {
     }
 
     void SpawnEnemies () {
-        Debug.Log (seconds);
         monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
         
     }

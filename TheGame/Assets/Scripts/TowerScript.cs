@@ -25,20 +25,9 @@ class TowerScript : Building {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
-        GameObject nearestEnemy = null;
-        float dist = Mathf.Infinity;
-        foreach (GameObject e in enemies) {
-            float d = Vector3.Distance (this.transform.position, e.transform.position);
-            if (nearestEnemy == null || d < dist) {
-                nearestEnemy = e;
-                dist = d;
-            }
-        }
+        GameObject nearestEnemy = getEnemy();
 
         if (nearestEnemy == null) return;
-        if (Vector3.Distance(transform.position, nearestEnemy.transform.position) > range) return;//za daleko
-
         
         float fireCooldownleft = Time.time - lastShot;
         if (fireCooldownleft >= fireRate) {
@@ -47,8 +36,25 @@ class TowerScript : Building {
         }
 	}
 
+    virtual public GameObject getEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        GameObject nearestEnemy = null;
+        float dist = Mathf.Infinity;
+        foreach (GameObject e in enemies)
+        {
+            if (Vector3.Distance(transform.position, e.transform.position) > range) continue;
+            float d = Vector3.Distance(this.transform.position, e.transform.position);
+            if (nearestEnemy == null || d < dist)
+            {
+                nearestEnemy = e;
+                dist = d;
+            }
+        }
+        return nearestEnemy;
+    }
 
-    void ShootAt (GameObject target) {
+    virtual public void ShootAt(GameObject target) {
 
         GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(target.transform.position)) as GameObject;
         go.SendMessage("SetDmg", damage);

@@ -84,7 +84,11 @@ class enemyScript : MonoBehaviour {
         hp -= (float)dmg;
         if (hp <= 0) die();
     }
-
+    public void takeSlowness(object slowness)
+    {
+        this.moveSpeed -= (float) slowness;
+        if (moveSpeed < 0.1f) moveSpeed = 0.1f;
+    }
     private void die()
     {
         foreach (GameObject drop in drops)

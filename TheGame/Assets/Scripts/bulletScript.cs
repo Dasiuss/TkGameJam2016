@@ -9,6 +9,7 @@ public class bulletScript : MonoBehaviour
     private GameObject enemy;
     private bool targetSetted = false;
     private float dmg;
+    private float slowness;
 
     void Start() {
     }
@@ -34,6 +35,8 @@ public class bulletScript : MonoBehaviour
         if (distance < 0.2)
         {
             target.SendMessage("takeDmg", dmg);
+            if(slowness>0)
+                target.SendMessage("takeSlowness", slowness);
             Destroy(gameObject);
         }
     }
@@ -48,5 +51,10 @@ public class bulletScript : MonoBehaviour
     public void SetDmg(object dmg)
     {
         this.dmg = (float)dmg;
+    }
+    public void SetSlowness(object slowness)
+    {
+        this.slowness = (float) slowness;
+        Debug.Log(this.slowness);
     }
 }
