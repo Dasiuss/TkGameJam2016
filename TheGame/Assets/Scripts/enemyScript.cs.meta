@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8019f019d68c16e44a772b06067142fa
+timeCreated: 1456564394
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - CASTLE: {instanceID: 0}
+  - playerProjectile: {fileID: 190614, guid: 24fe224ae8e76d74087b8de1555a60f7, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
