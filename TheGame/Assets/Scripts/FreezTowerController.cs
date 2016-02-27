@@ -18,7 +18,8 @@ class FreezTowerController : TowerScript {
                 enemiesInRange.Add(e);
             }
         }
-        return enemiesInRange[Random.Range(0,enemiesInRange.Count+1)];
+        if (enemiesInRange.Count == 0) return null;
+        return enemiesInRange[Random.Range(0, enemiesInRange.Count)];
     }
 
 

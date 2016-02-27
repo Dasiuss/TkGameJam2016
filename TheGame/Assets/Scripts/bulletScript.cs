@@ -55,6 +55,5 @@ public class bulletScript : MonoBehaviour
     public void SetSlowness(object slowness)
     {
         this.slowness = (float) slowness;
-        Debug.Log(this.slowness);
     }
 }
