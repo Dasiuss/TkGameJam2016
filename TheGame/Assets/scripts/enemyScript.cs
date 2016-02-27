@@ -90,7 +90,7 @@ class enemyScript : MonoBehaviour {
         foreach (GameObject drop in drops)
         {
             float rnd = Random.value;
-            if (rnd > dropProbability / drops.Length) { 
+            if (rnd < dropProbability / drops.Length) { 
                 Instantiate(drop, transform.position, transform.rotation);
             }
         }

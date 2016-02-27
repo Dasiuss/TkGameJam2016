@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
     
@@ -12,6 +13,7 @@ public class GameController : MonoBehaviour {
     private GameObject spellPanel;
     private GameObject monsterSpawner;
     private bool wave;
+    private List<string> availableSpells = new List<string>();
 
     private float spawnEnemiesCallRate = 0.5f;
     private float spawnEnemiesLastCall = 0;
@@ -69,6 +71,11 @@ public class GameController : MonoBehaviour {
         Debug.Log (seconds);
         monsterSpawner.GetComponent<MonsterSpawnerScript> ().SpawnMob ();
         
+    }
+
+    public void addSpell(object spellName)
+    {
+        availableSpells.Add((string) spellName);
     }
 
     void AddGoldForAKill(object gold)
