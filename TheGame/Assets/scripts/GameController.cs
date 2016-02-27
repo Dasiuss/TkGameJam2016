@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     private bool wave;
 
     private float spawnEnemiesCallRate = 0.5f;
-    private float spawnEnemiesLastCall = 0.0f;
+    private float spawnEnemiesLastCall = 0;
 
     private float startTime;
     private float seconds;

@@ -10,8 +10,7 @@ public class bulletScript : MonoBehaviour
     private bool targetSetted = false;
     private float dmg;
 
-    void Start()
-    {
+    void Start() {
     }
 
     void Update()
@@ -27,6 +26,10 @@ public class bulletScript : MonoBehaviour
 
         float maxDelta = Time.deltaTime * speed;
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, maxDelta);
+
+        //Quaternion rot = Quaternion.FromToRotation(transform.position, enemy.transform.position);
+        //transform.rotation = rot;
+
         float distance = Vector3.Distance(transform.position, target.transform.position);
         if (distance < 0.2)
         {

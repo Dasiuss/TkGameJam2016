@@ -11,6 +11,7 @@ class TowerScript : Building {
     public float damage;
     public float explosionRadius;
     public GameObject bulletPrefab;
+    public float price;
 
     private bool wave;
     private float lastShot = 0;

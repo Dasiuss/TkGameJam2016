@@ -4,8 +4,9 @@ using System.Collections;
 public class MonsterSpawnerScript : MonoBehaviour {
     Transform monsterSpawner;
     Vector3 center;
-    float spawnRadius = 500.0f;
+    float spawnRadius = 30;
 
+    public int monstersPerSeconds;
     public GameObject mobPrefab;
  
 	void Start () {
@@ -14,8 +15,8 @@ public class MonsterSpawnerScript : MonoBehaviour {
 	}
 
     public void SpawnMob () {
-        for (int i = 0; i < 5; i++) {
-            Vector3 pos = RandomCircle (center, 30.0f);
+        for (int i = 0; i < monstersPerSeconds/2; i++) {
+            Vector3 pos = RandomCircle (center, spawnRadius);
             Quaternion rot = Quaternion.FromToRotation (Vector3.forward, center - pos);
             GameObject e = (GameObject)Instantiate (mobPrefab, pos, rot);
             e.tag = "enemy";
