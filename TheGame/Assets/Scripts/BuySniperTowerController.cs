@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 
 public class BuySniperTowerController : MonoBehaviour, IPointerClickHandler {
 
-    public bool onClick = true;
     GameObject gc;
 
     void Start () {
