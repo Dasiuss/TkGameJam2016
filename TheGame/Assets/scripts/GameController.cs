@@ -107,6 +107,9 @@ public class GameController : MonoBehaviour {
     }
 
     public void BuyMissle() {
+        GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10,-78.91f,10), Quaternion.identity);
+        mtower.transform.localScale = new Vector3 (10, 10, 10);
+        mtower.SendMessage ("SetMovable", true);
         Debug.Log ("So you want to buy missle tower, huh?");
     }
 

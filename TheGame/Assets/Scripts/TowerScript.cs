@@ -17,13 +17,25 @@ class TowerScript : Building {
     private GameObject spottedEnemy;
     private Transform turretTransform;
 
-	void Start () {
+    private bool movable;
+    private float actualDistance;
+
+    void Start () {
         turretTransform = this.transform;
         wave = false;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (movable) {
+            //actualDistance = (transform.position - Camera.main.transform.position).magnitude;
+            //actualDistance = 10;
+            //Vector3 mouseposition = Input.mousePosition;
+            //mouseposition.z = actualDistance;
+            //transform.position = Camera.main.ScreenToWorldPoint (mouseposition);
+            transform.position = new Vector3 (Input.mousePosition.x/5-Screen.width/10, 0, Input.mousePosition.y/5-Screen.height/10);
+            UnityEngine.Cursor.visible = false;
+        }
         GameObject [] enemies = GameObject.FindGameObjectsWithTag ("enemy");
         GameObject nearestEnemy = null;
         float dist = Mathf.Infinity;
@@ -59,5 +71,17 @@ class TowerScript : Building {
     {
         this.hp -= (float) dmg;
         if (hp <= 0) Destroy(gameObject);
+    }
+
+    public void SetMovable(object m) {
+        movable = (bool)m;
+    }
+
+    void OnMouseDown () {
+        Debug.Log ("Click");
+        if (movable) {
+            movable = false;
+            UnityEngine.Cursor.visible = true;
+        }
     }
 }
