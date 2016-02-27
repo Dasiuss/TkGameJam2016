@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     private Text goldText;
     private Text incomeText;
     private GameObject buttonImage;
+    private GameObject spellPanel;
     private bool wave;
 
     private float spawnEnemiesCallRate = 0.5f;
@@ -26,6 +27,8 @@ public class GameController : MonoBehaviour {
         goldText = GameObject.FindWithTag ("GoldText").GetComponent<Text> ();
         goldText.text = "Gold: " + goldAmount;
         buttonImage = GameObject.FindWithTag ("StartWaveButton");
+        spellPanel = GameObject.Find ("SpellPanel");
+        spellPanel.gameObject.SetActive (false);
     }
 
     void Update () {
@@ -44,6 +47,7 @@ public class GameController : MonoBehaviour {
         seconds = 10;
         startTime = Time.time;
         wave = true;
+        spellPanel.SetActive (true);
     }
 
     void AfterWaveUpdate () {
@@ -51,6 +55,7 @@ public class GameController : MonoBehaviour {
         goldAmount += income;
         goldText.text = "Gold: " + goldAmount;
         buttonImage.gameObject.SetActive (true);
+        spellPanel.gameObject.SetActive (false);
         Debug.Log ("Build phase");
     }
 
