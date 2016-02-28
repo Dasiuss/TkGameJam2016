@@ -45,10 +45,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BulletScript.cs" />
-     <Compile Include="Assets\Scripts\GameController.cs" />
-     <Compile Include="Assets\Scripts\StartWaveButtonController.cs" />
-     <Compile Include="Assets\Scripts\TowerScript.cs" />
+     <Compile Include="Assets\scripts\Building.cs" />
+     <Compile Include="Assets\scripts\BuyFreezeTowerController.cs" />
+     <Compile Include="Assets\scripts\BuyMissleTowerController.cs" />
+     <Compile Include="Assets\scripts\BuySniperTowerController.cs" />
+     <Compile Include="Assets\scripts\CastChaosController.cs" />
+     <Compile Include="Assets\scripts\CastIncomeController.cs" />
+     <Compile Include="Assets\scripts\Castle.cs" />
+     <Compile Include="Assets\scripts\ExitButtonController.cs" />
+     <Compile Include="Assets\scripts\FreezTowerController.cs" />
+     <Compile Include="Assets\scripts\GameController.cs" />
+     <Compile Include="Assets\scripts\LoseButtonController.cs" />
+     <Compile Include="Assets\scripts\MainMenuButtonController.cs" />
+     <Compile Include="Assets\scripts\MonsterSpawnerScript.cs" />
+     <Compile Include="Assets\scripts\MsgDispatcher.cs" />
+     <Compile Include="Assets\scripts\MusicManagerCtrl.cs" />
+     <Compile Include="Assets\scripts\SpellScript.cs" />
+     <Compile Include="Assets\scripts\StartGameController.cs" />
+     <Compile Include="Assets\scripts\StartWaveButtonController.cs" />
+     <Compile Include="Assets\scripts\TowerScript.cs" />
+     <Compile Include="Assets\scripts\bulletScript.cs" />
+     <Compile Include="Assets\scripts\enemyScript.cs" />
+     <None Include="Assets\TS Sounds\Read Me.txt" />
+     <None Include="Assets\Fonts\readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
