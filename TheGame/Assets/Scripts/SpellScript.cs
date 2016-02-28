@@ -18,7 +18,7 @@ public class SpellScript : MonoBehaviour{
 
     void OnMouseDown() {
         GameObject gameCtrl = GameObject.FindGameObjectWithTag("GameController");
-        gameCtrl.SendMessage("addSpell", this.spellName);
+        gameCtrl.SendMessage("AddSpell", this.spellName);
         Destroy(gameObject);
     }
 }
