@@ -6,6 +6,7 @@ public class BuyFreezeTowerController : MonoBehaviour, IPointerClickHandler {
     
     GameObject gc;
     public AudioClip errorSound;
+    public AudioClip buySound;
 
     void Start () {
         gc = GameObject.FindWithTag ("GameController");
@@ -18,6 +19,12 @@ public class BuyFreezeTowerController : MonoBehaviour, IPointerClickHandler {
     }
 
     public void PlayError () {
+        this.GetComponent<AudioSource> ().clip = errorSound;
+        this.GetComponent<AudioSource> ().Play ();
+    }
+
+    public void PlayBuy () {
+        this.GetComponent<AudioSource> ().clip = buySound;
         this.GetComponent<AudioSource> ().Play ();
     }
 }
