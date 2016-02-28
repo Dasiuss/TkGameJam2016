@@ -17,6 +17,7 @@ class TowerScript : Building {
     private float lastShot = 0;
     private GameObject spottedEnemy;
     private Transform turretTransform;
+    private Vector3 originalScale;
 
     private bool movable;
     private float actualDistance;
@@ -37,7 +38,7 @@ class TowerScript : Building {
             {
                 UnityEngine.Cursor.visible = true;
                 movable = false;
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = originalScale;
             }
         }
         GameObject nearestEnemy = getEnemy();
@@ -85,5 +86,7 @@ class TowerScript : Building {
 
     public void SetMovable(object m) {
         movable = (bool)m;
+        originalScale = transform.localScale;
+        transform.localScale = transform.localScale * 2;
     }
 }

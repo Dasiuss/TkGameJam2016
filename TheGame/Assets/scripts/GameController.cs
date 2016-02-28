@@ -124,8 +124,7 @@ public class GameController : MonoBehaviour {
 
     public void BuyMissle () {
         if (missleTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
-            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10, -78.91f, 10), missleTowerPrefab.transform.rotation);
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= missleTowerPrefab.GetComponent<TowerScript> ().cost;
             TextUpdate();
@@ -134,8 +133,7 @@ public class GameController : MonoBehaviour {
 
     public void BuyFreeze () {
         if (freezeTowerPrefab.GetComponent<FreezTowerController> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (freezeTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
-            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            GameObject mtower = (GameObject)Instantiate (freezeTowerPrefab, new Vector3 (10, -78.91f, 10), freezeTowerPrefab.transform.rotation);
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= freezeTowerPrefab.GetComponent<FreezTowerController> ().cost;
             TextUpdate();
@@ -144,8 +142,7 @@ public class GameController : MonoBehaviour {
 
     public void BuySniper () {
         if (sniperTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (sniperTowerPrefab, new Vector3 (10, -78.91f, 10), Quaternion.identity);
-            mtower.transform.localScale = new Vector3 (2, 2, 2);
+            GameObject mtower = (GameObject)Instantiate (sniperTowerPrefab, new Vector3 (10, -78.91f, 10), sniperTowerPrefab.transform.rotation);
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= sniperTowerPrefab.GetComponent<TowerScript> ().cost;
             TextUpdate();
