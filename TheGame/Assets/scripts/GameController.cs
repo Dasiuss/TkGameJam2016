@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
     private GameObject buyTowerPnl;
     private bool wave;
     private int[] availableSpells = new int[3] { 0, 0, 0 };
+    private GameObject losemsg;
 
     private float spawnEnemiesCallRate = 0.5f;
     private float spawnEnemiesLastCall = 0;
@@ -27,8 +28,13 @@ public class GameController : MonoBehaviour {
     public GameObject missleTowerPrefab;
     public GameObject freezeTowerPrefab;
     public GameObject sniperTowerPrefab;
+    public AudioClip buildMusic;
+    public AudioClip waveMusic;
+    public float volume;
 
     void Start () {
+        losemsg = GameObject.Find ("LoseMessage");
+        losemsg.SetActive (false);
         wave = false;
         incomeText = GameObject.FindWithTag ("IncomeText").GetComponent<Text>();
         incomeText.text = "Income: " + income;
@@ -40,6 +46,10 @@ public class GameController : MonoBehaviour {
         buyTowerPnl = GameObject.Find ("TowerPanel");
         monsterSpawner = GameObject.Find ("MonsterSpawner");
         SetBuyTowerPanel ();
+        this.gameObject.AddComponent<AudioSource> ();
+        this.GetComponent<AudioSource> ().clip = buildMusic;
+        this.GetComponent<AudioSource> ().volume = volume;
+        this.GetComponent<AudioSource> ().Play ();
     }
 
     void Update () {
@@ -80,6 +90,9 @@ public class GameController : MonoBehaviour {
     }
 
     public void StartWave () {
+        this.GetComponent<AudioSource> ().Pause ();
+        this.GetComponent<AudioSource> ().clip = waveMusic;
+        this.GetComponent<AudioSource> ().Play ();
         buttonImage.gameObject.SetActive (false);
         seconds = 10;
         startTime = Time.time;
@@ -90,6 +103,9 @@ public class GameController : MonoBehaviour {
 
     void AfterWaveUpdate () {
         wave = false;
+        this.GetComponent<AudioSource> ().Pause ();
+        this.GetComponent<AudioSource> ().clip = buildMusic;
+        this.GetComponent<AudioSource> ().Play ();
         goldAmount += income;
         goldText.text = "Gold: " + goldAmount;
         buttonImage.gameObject.SetActive (true);
@@ -124,28 +140,52 @@ public class GameController : MonoBehaviour {
 
     public void BuyMissle () {
         if (missleTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (missleTowerPrefab, new Vector3 (10, -78.91f, 10), missleTowerPrefab.transform.rotation);
+            GameObject.Find("BuyMissleTower").GetComponent<BuyMissleTowerController>().SendMessage ("PlayBuy", null);
+            GameObject mtower = (GameObject)Instantiate(missleTowerPrefab, new Vector3(10, -78.91f, 10), missleTowerPrefab.transform.rotation);
+
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= missleTowerPrefab.GetComponent<TowerScript> ().cost;
             TextUpdate();
+        } else {
+            GameObject buyMissleTower = GameObject.Find ("BuyMissleTower");
+            BuyMissleTowerController bmtc = buyMissleTower.GetComponent<BuyMissleTowerController> ();
+            bmtc.SendMessage ("PlayError", null);
         }
     }
 
     public void BuyFreeze () {
         if (freezeTowerPrefab.GetComponent<FreezTowerController> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (freezeTowerPrefab, new Vector3 (10, -78.91f, 10), freezeTowerPrefab.transform.rotation);
+            GameObject.Find ("BuyFreezeTower").GetComponent<BuyFreezeTowerController> ().SendMessage ("PlayBuy", null);
+            GameObject mtower = (GameObject)Instantiate(freezeTowerPrefab, new Vector3(10, -78.91f, 10), freezeTowerPrefab.transform.rotation);
+
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= freezeTowerPrefab.GetComponent<FreezTowerController> ().cost;
             TextUpdate();
+        } else {
+            GameObject buyFreezeTower = GameObject.Find ("BuyFreezeTower");
+            BuyFreezeTowerController bftc = buyFreezeTower.GetComponent<BuyFreezeTowerController> ();
+            bftc.SendMessage ("PlayError", null);
         }
     }
 
     public void BuySniper () {
         if (sniperTowerPrefab.GetComponent<TowerScript> ().cost <= goldAmount) {
-            GameObject mtower = (GameObject)Instantiate (sniperTowerPrefab, new Vector3 (10, -78.91f, 10), sniperTowerPrefab.transform.rotation);
+            
+            GameObject.Find ("BuySniperTower").GetComponent<BuySniperTowerController> ().SendMessage ("PlayBuy", null);
+            GameObject mtower = (GameObject)Instantiate(sniperTowerPrefab, new Vector3(10, -78.91f, 10), sniperTowerPrefab.transform.rotation);
             mtower.SendMessage ("SetMovable", true);
             goldAmount -= sniperTowerPrefab.GetComponent<TowerScript> ().cost;
             TextUpdate();
+        } else {
+            GameObject buySniperTower = GameObject.Find ("BuySniperTower");
+            BuySniperTowerController bstc = buySniperTower.GetComponent<BuySniperTowerController> ();
+            bstc.SendMessage ("PlayError", null);
         }
+    }
+
+    public void EndGame () {
+        this.GetComponent<AudioSource> ().Pause ();
+        wave = false;
+        losemsg.SetActive (true);
     }
 }

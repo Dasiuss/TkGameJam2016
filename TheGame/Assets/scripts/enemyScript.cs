@@ -17,6 +17,10 @@ class enemyScript : MonoBehaviour {
     public string castleName = "Castle";
     public float hp;
     public int goldWorth;
+    public AudioClip attackSound;
+    public AudioClip deathSound;
+    public float attSoundProb;
+    public float dieSoundProb;
 
     private float lastAttackTime;
 
@@ -25,6 +29,8 @@ class enemyScript : MonoBehaviour {
         lastAttackTime = Time.time;
         CASTLE = GameObject.Find(castleName);
         gameCtrl = GameObject.FindGameObjectWithTag("GameController");
+        this.gameObject.AddComponent<AudioSource> ();
+        this.GetComponent<AudioSource> ().clip = attackSound;
 	}
 	
 	// Update is called once per frame
@@ -69,6 +75,10 @@ class enemyScript : MonoBehaviour {
     {
         if(lastAttackTime < Time.time - attackRate)
         {
+            float r = Random.value;
+            if (r < attSoundProb) {
+                this.GetComponent<AudioSource> ().Play ();
+            }
             GameObject go = Instantiate(playerProjectile, transform.position, Quaternion.LookRotation(CASTLE.transform.position)) as GameObject;
             go.SendMessage("SetDmg", dmg);
             go.SendMessage("SetEnemy", target);
@@ -91,10 +101,17 @@ class enemyScript : MonoBehaviour {
     }
     private void die()
     {
-        foreach (GameObject drop in drops)
+        if (Random.value<0.1)
         {
+            this.GetComponent<AudioSource>().clip = deathSound;
+            this.GetComponent<AudioSource>().Play();
+        }
+        foreach (GameObject drop in drops)
+        {       
             float rnd = Random.value;
-            if (rnd < dropProbability / drops.Length) {
+            
+            rnd = Random.value;
+            if (rnd < dropProbability / drops.Length) { 
                 Instantiate(drop, transform.position, transform.rotation);
             }
         }
