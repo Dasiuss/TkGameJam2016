@@ -233,4 +233,8 @@ public class GameController : MonoBehaviour {
         hpinf.text = "Castle HP: 0";
         losemsg.SetActive (true);
     }
+
+    public void IncIncome (object o) {
+        income += (int)o;
+    }
 }
