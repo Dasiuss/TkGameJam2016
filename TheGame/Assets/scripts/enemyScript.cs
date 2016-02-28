@@ -24,14 +24,19 @@ class enemyScript : MonoBehaviour {
 
     private float lastAttackTime;
 
-	// Use this for initialization
-	void Start () {
+    public AnimationClip dieClip;
+    public AnimationClip throwClip;
+
+
+    // Use this for initialization
+    void Start ()
+    {
         lastAttackTime = Time.time;
         CASTLE = GameObject.Find(castleName);
         gameCtrl = GameObject.FindGameObjectWithTag("GameController");
         this.gameObject.AddComponent<AudioSource> ();
         this.GetComponent<AudioSource> ().clip = attackSound;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -73,7 +78,9 @@ class enemyScript : MonoBehaviour {
 
     void attack(GameObject target)
     {
-        if(lastAttackTime < Time.time - attackRate)
+        this.GetComponent<Animation>().RemoveClip(this.GetComponent<Animation>().clip);
+
+        if (lastAttackTime < Time.time - attackRate)
         {
             float r = Random.value;
             if (r < attSoundProb) {
@@ -82,8 +89,6 @@ class enemyScript : MonoBehaviour {
             GameObject go = Instantiate(playerProjectile, transform.position, Quaternion.LookRotation(CASTLE.transform.position)) as GameObject;
             go.SendMessage("SetDmg", dmg);
             go.SendMessage("SetEnemy", target);
-            // TODO Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.forward);
-            //      go.transform.rotation = q * go.transform.rotation;
             
             lastAttackTime = Time.time;
         }
