@@ -73,6 +73,9 @@ class TowerScript : Building {
     virtual public void ShootAt(GameObject target) {
 
         GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(target.transform.position)) as GameObject;
+
+        go.transform.LookAt(target.transform);
+
         go.SendMessage("SetDmg", damage);
         go.SendMessage("SetEnemy", target);
     }

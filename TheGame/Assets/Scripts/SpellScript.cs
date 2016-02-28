@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
 public class SpellScript : MonoBehaviour{
-    public string spellName = "anySpell";
+    public int spellNumber;
     public float startTime;
-	// Use this for initialization
-	void Start () {
+
+    private bool gathered = false;
+
+    // Use this for initialization
+    void Start () {
         transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         startTime = Time.time;
 	}
@@ -13,12 +16,21 @@ public class SpellScript : MonoBehaviour{
     void Update()
     {
         transform.Rotate(5, 1, 2);
-        if (startTime + 2 < Time.time) Destroy(gameObject);
+        if (gathered)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z);
+            if (transform.position.y > 100) Destroy(gameObject);
+        }else {
+            if (startTime + 3 < Time.time) Destroy(gameObject);
+        }
     }
 
     void OnMouseDown() {
-        GameObject gameCtrl = GameObject.FindGameObjectWithTag("GameController");
-        gameCtrl.SendMessage("addSpell", this.spellName);
-        Destroy(gameObject);
+        if (!gathered)
+        {
+            GameObject gameCtrl = GameObject.FindGameObjectWithTag("GameController");
+            gameCtrl.SendMessage("addSpell", this.spellNumber);
+            gathered = true;
+        }
     }
 }

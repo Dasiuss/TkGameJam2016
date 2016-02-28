@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     private GameObject monsterSpawner;
     private GameObject buyTowerPnl;
     private bool wave;
-    private List<string> availableSpells = new List<string>();
+    private int[] availableSpells = new int[3] { 0, 0, 0 };
 
     private float spawnEnemiesCallRate = 0.5f;
     private float spawnEnemiesLastCall = 0;
@@ -112,9 +112,9 @@ public class GameController : MonoBehaviour {
         
     }
     
-    public void addSpell(object spellName)
+    public void addSpell(object spellNumber)
     {
-        availableSpells.Add((string) spellName);
+        availableSpells[(int) spellNumber]++;
     }
 
     void AddGoldForAKill(object gold)
