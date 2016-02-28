@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
     private int goldAmount = 1000;
     private Text goldText;
     private Text incomeText;
+    private Text hpinf;
+    private GameObject castle;
     private GameObject buttonImage;
     private GameObject spellPanel;
     private GameObject monsterSpawner;
@@ -16,6 +18,7 @@ public class GameController : MonoBehaviour {
     private bool wave;
     private List<string> availableSpells = new List<string>();
     private GameObject losemsg;
+    
 
     private float spawnEnemiesCallRate = 0.5f;
     private float spawnEnemiesLastCall = 0;
@@ -50,9 +53,12 @@ public class GameController : MonoBehaviour {
         this.GetComponent<AudioSource> ().clip = buildMusic;
         this.GetComponent<AudioSource> ().volume = volume;
         this.GetComponent<AudioSource> ().Play ();
+        castle = GameObject.Find ("Castle");
+        hpinf = GameObject.Find ("HpInfo").GetComponent<Text>();
     }
 
     void Update () {
+        hpinf.text = "Castle HP: " + castle.GetComponent<Assets.scripts.Castle> ().hp;
         time = Time.time;
         seconds = time - startTime;
         if (seconds > waveDuration && wave) {
@@ -186,6 +192,7 @@ public class GameController : MonoBehaviour {
     public void EndGame () {
         this.GetComponent<AudioSource> ().Pause ();
         wave = false;
+        hpinf.text = "Castle HP: 0";
         losemsg.SetActive (true);
     }
 }

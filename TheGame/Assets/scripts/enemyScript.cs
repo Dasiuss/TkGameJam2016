@@ -101,13 +101,13 @@ class enemyScript : MonoBehaviour {
     }
     private void die()
     {
-        foreach (GameObject drop in drops)
-        {       
-            float rnd = Random.value;
-            if (rnd < Random.value) {
-                this.GetComponent<AudioSource> ().clip = deathSound;
-                this.GetComponent<AudioSource> ().Play ();
-            }
+        float rnd = Random.value;
+        if (rnd < Random.value) {
+            this.GetComponent<AudioSource> ().clip = deathSound;
+            this.GetComponent<AudioSource> ().Play ();
+        }
+
+        foreach (GameObject drop in drops) {
             rnd = Random.value;
             if (rnd < dropProbability / drops.Length) { 
                 Instantiate(drop, transform.position, transform.rotation);
