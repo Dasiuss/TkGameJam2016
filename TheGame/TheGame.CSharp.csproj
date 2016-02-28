@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\BuyFreezeTowerController.cs" />
     <Compile Include="Assets\Scripts\BuyMissleTowerController.cs" />
     <Compile Include="Assets\Scripts\BuySniperTowerController.cs" />
+    <Compile Include="Assets\Scripts\CastChaosController.cs" />
+    <Compile Include="Assets\Scripts\CastIncomeController.cs" />
     <Compile Include="Assets\Scripts\Castle.cs" />
     <Compile Include="Assets\Scripts\ExitButtonController.cs" />
     <Compile Include="Assets\Scripts\FreezTowerController.cs" />

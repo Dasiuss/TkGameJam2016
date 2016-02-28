@@ -22,6 +22,7 @@ class enemyScript : MonoBehaviour {
     public float attSoundProb;
     public float dieSoundProb;
 
+    public string targetTag = "tower";
     private float lastAttackTime;
 
     public AnimationClip dieClip;
@@ -69,7 +70,7 @@ class enemyScript : MonoBehaviour {
     
     private GameObject findTarget()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("tower");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(targetTag);
         foreach (GameObject e in enemies){
             if (Vector3.Distance(this.transform.position, e.transform.position) <= range) return e;
         }
@@ -114,14 +115,17 @@ class enemyScript : MonoBehaviour {
         foreach (GameObject drop in drops)
         {       
             float rnd = Random.value;
-            
             rnd = Random.value;
-            if (rnd < dropProbability / drops.Length) { 
+            if (rnd < dropProbability / drops.Length) {
                 Instantiate(drop, transform.position, transform.rotation);
             }
         }
         gameCtrl.SendMessage("AddGoldForAKill", goldWorth);
         
         Destroy(gameObject);
+    }
+
+    public void TagEnemy () {
+        targetTag = "enemy";
     }
 }

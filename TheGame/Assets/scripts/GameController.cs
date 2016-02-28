@@ -9,13 +9,20 @@ public class GameController : MonoBehaviour {
     private int goldAmount = 1000;
     private Text goldText;
     private Text incomeText;
+    private Text hpinf;
+    private GameObject castle;
     private GameObject buttonImage;
     private GameObject spellPanel;
     private GameObject monsterSpawner;
     private GameObject buyTowerPnl;
+    private GameObject [] spellsIcons = new GameObject [3];
     private bool wave;
+
     private int[] availableSpells = new int[3] { 0, 0, 0 };
+
     private GameObject losemsg;
+    private bool [] spells = new bool [3];
+    
 
     private float spawnEnemiesCallRate = 0.5f;
     private float spawnEnemiesLastCall = 0;
@@ -31,6 +38,9 @@ public class GameController : MonoBehaviour {
     public AudioClip buildMusic;
     public AudioClip waveMusic;
     public float volume;
+    public GameObject spell1;
+    public GameObject spell2;
+    public GameObject spell3;
 
     void Start () {
         losemsg = GameObject.Find ("LoseMessage");
@@ -50,9 +60,15 @@ public class GameController : MonoBehaviour {
         this.GetComponent<AudioSource> ().clip = buildMusic;
         this.GetComponent<AudioSource> ().volume = volume;
         this.GetComponent<AudioSource> ().Play ();
+        castle = GameObject.Find ("Castle");
+        hpinf = GameObject.Find ("HpInfo").GetComponent<Text>();
+        for (int i = 0; i< 3; i++) {
+            spells [i] = false;
+        }
     }
 
     void Update () {
+        hpinf.text = "Castle HP: " + castle.GetComponent<Assets.scripts.Castle> ().hp;
         time = Time.time;
         seconds = time - startTime;
         if (seconds > waveDuration && wave) {
@@ -61,6 +77,11 @@ public class GameController : MonoBehaviour {
         if (wave && time - spawnEnemiesLastCall > spawnEnemiesCallRate) {
             spawnEnemiesLastCall = time;
             SpawnEnemies ();
+            for (int i = 0; i < 3; i++) {
+                if (spells [i] == true) {
+                    spellsIcons [i].SetActive (true);
+                }
+            }
         }
     }
 
@@ -99,6 +120,7 @@ public class GameController : MonoBehaviour {
         wave = true;
         spellPanel.SetActive (true);
         buyTowerPnl.SetActive (false);
+        FindSpellsIcons ();
     }
 
     void AfterWaveUpdate () {
@@ -116,6 +138,9 @@ public class GameController : MonoBehaviour {
         foreach (GameObject e in enemies) {
             Destroy (e);
         };
+        for (int i = 0; i < 3; i++) {
+            spells [i] = false;
+        }
     }
 
     void TextUpdate()
@@ -131,6 +156,15 @@ public class GameController : MonoBehaviour {
     public void addSpell(object spellNumber)
     {
         availableSpells[(int) spellNumber]++;
+    }
+
+    void FindSpellsIcons () {
+        spellsIcons [0] = GameObject.Find ("ChaosSpell");
+        spellsIcons [0].SetActive (false);
+        spellsIcons [1] = GameObject.Find ("FreezeSpell");
+        spellsIcons [1].SetActive (false);
+        spellsIcons [2] = GameObject.Find ("IncomeSpell");
+        spellsIcons [2].SetActive (false);
     }
 
     void AddGoldForAKill(object gold)
@@ -186,6 +220,11 @@ public class GameController : MonoBehaviour {
     public void EndGame () {
         this.GetComponent<AudioSource> ().Pause ();
         wave = false;
+        hpinf.text = "Castle HP: 0";
         losemsg.SetActive (true);
+    }
+
+    public void IncIncome (object o) {
+        income += (int)o;
     }
 }
