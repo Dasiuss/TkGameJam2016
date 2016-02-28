@@ -53,8 +53,11 @@
      <Compile Include="Assets\scripts\ExitButtonController.cs" />
      <Compile Include="Assets\scripts\FreezTowerController.cs" />
      <Compile Include="Assets\scripts\GameController.cs" />
+     <Compile Include="Assets\scripts\LoseButtonController.cs" />
+     <Compile Include="Assets\scripts\MainMenuButtonController.cs" />
      <Compile Include="Assets\scripts\MonsterSpawnerScript.cs" />
      <Compile Include="Assets\scripts\MsgDispatcher.cs" />
+     <Compile Include="Assets\scripts\MusicManagerCtrl.cs" />
      <Compile Include="Assets\scripts\SpellScript.cs" />
      <Compile Include="Assets\scripts\StartGameController.cs" />
      <Compile Include="Assets\scripts\StartWaveButtonController.cs" />
