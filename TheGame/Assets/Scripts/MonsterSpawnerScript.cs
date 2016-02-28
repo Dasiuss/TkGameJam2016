@@ -15,7 +15,7 @@ public class MonsterSpawnerScript : MonoBehaviour {
 
     public void SpawnMob () {
         // monstersPerSeconds - 2 na wiezyczke na sekunde
-        int monstersPerSeconds = GameObject.FindGameObjectsWithTag("tower").Length;
+        int monstersPerSeconds = GameObject.FindGameObjectsWithTag("tower").Length/2;
         for (int i = 0; i < monstersPerSeconds; i++) {
             Vector3 pos = RandomCircle (center, spawnRadius);
             Quaternion rot = Quaternion.FromToRotation (Vector3.forward, center - pos);

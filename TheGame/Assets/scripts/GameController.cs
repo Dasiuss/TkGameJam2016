@@ -61,10 +61,8 @@ public class GameController : MonoBehaviour {
         this.GetComponent<AudioSource> ().volume = volume;
         this.GetComponent<AudioSource> ().Play ();
         castle = GameObject.Find ("Castle");
+        Debug.Log(castle);
         hpinf = GameObject.Find ("HpInfo").GetComponent<Text>();
-        for (int i = 0; i< 3; i++) {
-            spells [i] = false;
-        }
     }
 
     void Update () {
@@ -78,9 +76,11 @@ public class GameController : MonoBehaviour {
             spawnEnemiesLastCall = time;
             SpawnEnemies ();
             for (int i = 0; i < 3; i++) {
-                if (spells [i] == true) {
+                if (availableSpells [i] > 0) {
                     spellsIcons [i].SetActive (true);
-                }
+                }//else {
+                  //  spellsIcons [i].SetActive(false);
+                //}
             }
         }
     }
@@ -89,7 +89,7 @@ public class GameController : MonoBehaviour {
         Text mthp = GameObject.Find ("MtHP").GetComponent<Text> ();
         Text mtdmg = GameObject.Find ("MtDmg").GetComponent<Text> ();
         Text mtfr = GameObject.Find ("MtFr").GetComponent<Text> ();
-        mthp.text = "HP: " + missleTowerPrefab.GetComponent<TowerScript> ().hp;
+        mthp.text = "HP: " + missleTowerPrefab.GetComponent<Assets.scripts.Building> ().hp;
         mtdmg.text = "Dmg: " + missleTowerPrefab.GetComponent<TowerScript> ().damage;
         mtfr.text = "FR: " + missleTowerPrefab.GetComponent<TowerScript> ().fireRate;
 
@@ -138,14 +138,16 @@ public class GameController : MonoBehaviour {
         foreach (GameObject e in enemies) {
             Destroy (e);
         };
-        for (int i = 0; i < 3; i++) {
-            spells [i] = false;
-        }
+     //   for (int i = 0; i < 3; i++) {
+     //       spells [i] = false;
+     //   }
     }
 
     void TextUpdate()
     {
         goldText.text = "Gold: " + goldAmount;
+        incomeText = GameObject.FindWithTag("IncomeText").GetComponent<Text>();
+        incomeText.text = "Income: " + income;
     }
 
     void SpawnEnemies () {
@@ -226,5 +228,7 @@ public class GameController : MonoBehaviour {
 
     public void IncIncome (object o) {
         income += (int)o;
+        availableSpells[2]--;
+        TextUpdate();
     }
 }
